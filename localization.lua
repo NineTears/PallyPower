@@ -2,7 +2,7 @@ PallyPower_Version = "1.066"
   SLASH_PALLYPOWER1 = "/pp"
   SLASH_PALLYPOWER2 = "/pallypower"
 
- PallyPower_BlessingID = { };
+PallyPower_BlessingID = { };
 PallyPower_BlessingID[0] = "Wisdom";
 PallyPower_BlessingID[1] = "Might";
 PallyPower_BlessingID[2] = "Salvation";
@@ -10,8 +10,10 @@ PallyPower_BlessingID[3] = "Light";
 PallyPower_BlessingID[4] = "Kings";
 PallyPower_BlessingID[5] = "Sanctuary";
 
+
 PallyPower_BlessingTalentSearch = "Improved Blessing of (.*)";
 PallyPower_BlessingSpellSearch = "Greater Blessing of (.*)";
+PallyPower_FiveManBlessingSpellSearch = "Blessing of (.*)";
 PallyPower_Rank1 = "Rank 1"
 PallyPower_RankSearch = "Rank (.*)"
 PallyPower_Symbol = "Symbol of Kings"
@@ -134,25 +136,25 @@ elseif (GetLocale() == "frFR") then
     PallyPower_BlessingID[3] = "de lumi\195\168re";
     PallyPower_BlessingID[4] = "des rois";
     PallyPower_BlessingID[5] = "du sanctuaire";
-    
+
     PallyPower_BlessingTalentSearch = "B\195\169n\195\169diction (.*) am\195\169lior\195\169e";
     PallyPower_BlessingSpellSearch = "B\195\169n\195\169diction (.*) sup\195\169rieure";
     PallyPower_Rank1 = "Rang 1"
     PallyPower_RankSearch = "Rang (.*)"
     PallyPower_Symbol = "Symbole des rois"
-    
+
     -- _,class = UnitClass("player") returns....
     PallyPower_Paladin = "PALADIN"
-    
+
     -- Used... ClassID .. ": B\195\169n\195\169diction de "..BlessingID
     PallyPower_BuffFrameText = ": B\195\169n\195\169diction de "
     PallyPower_Have = "A : "
     PallyPower_Need = "Besoin : "
     PallyPower_NotHere = "Pas ici : "
     PallyPower_Dead = "Mort : "
-    
+
     PallyPower_BuffBarTitle = "Pally Buffs (%d)"
-    
+
     --- By Lines... Keep People the same, feel free to add yourself in the _Credits3 line if your localizing
     --- And feel free to add a friend or two to special thanks
     PallyPower_Credits1 = "Pally Power - by Gnarf aka Sneakyfoot"
@@ -164,11 +166,11 @@ elseif (GetLocale() == "frFR") then
 
     -- Buff name, Class Name
     PallyPower_CouldntFind = "Ne peut trouver une cible pour b\195\169n\195\169diction %s sur %s!"
-    
+
     -- Buff name, Class name, Person Name
     PallyPower_Casting = "Lance b\195\169n\195\169diction %s sur %s (%s)"
-    
-    
+
+
      PallyPower_ClassID = { };
     PallyPower_ClassID[0] = "Guerrier";
     PallyPower_ClassID[1] = "Voleur";
@@ -179,7 +181,7 @@ elseif (GetLocale() == "frFR") then
     PallyPower_ClassID[6] = "Mage";
     PallyPower_ClassID[7] = "D\195\169moniste";
     PallyPower_ClassID[8] = "Chamane";
-    
+
     --XML
     PALLYPOWER_CLEAR = "Nettoyer";
     PALLYPOWER_REFRESH = "Rafraichir";
