@@ -1,5 +1,6 @@
-local initalized = false
-
+﻿local initalized = false
+FiveMinuteBlessingOn = false;
+--DEFAULT_CHAT_FRAME:AddMessage("[PP] " .. FiveMinBlessingOn, 1, 0, 0);
 BINDING_HEADER_PALLYPOWER_HEADER = "Pally Power";
 BINDING_NAME_TOGGLE = "Toggle Buff Bar";
 BINDING_NAME_REPORT = "Report Assignments";
@@ -11,41 +12,72 @@ PallyPower_Assignments = { };
 PallyPower = {};
 
 BlessingIcon = {};
-FiveManBlessingIcon = {};
-BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom";
-BlessingIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
-BlessingIcon[2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation";
-BlessingIcon[3] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofLight";
-BlessingIcon[4] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings";
-BlessingIcon[5] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary";
-FiveManBlessingIcon[0] = "Interface\\Icons\\Spell_Holy_SealOfWisdom";
-FiveManBlessingIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
-FiveManBlessingIcon[2] = "Interface\\Icons\\Spell_Holy_SealOfSalvation";
-
-
-
 BuffIcon = {};
+PP_PerUser = {
+    scalemain = 1, -- corner of main window docked to
+    scalebar = 1, -- corner menu window is docked from
+    scanfreq = 10,
+    scanperframe = 1,
+    smartbuffs = 1,
+}
+PP_NextScan = PP_PerUser.scanfreq
+
+
+
+function PallyPower_FiveMinuteBlessings()
+    isChecked = FiveMinBlessingChk:GetChecked()
+
+    if (isChecked == 1) then
+      FiveMinuteBlessingOn = true;
+      ReloadUI()
+    else
+      FiveMinuteBlessingOn = false;
+      ReloadUI()
+    end
+
+end
+
+
 --filler?
 BuffIcon[-1] = "Interface\\Icons\\Ability_Stealth"
---greater blessings
-BuffIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom"
-BuffIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice"
-BuffIcon[2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation"
-BuffIcon[3] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofLight"
-BuffIcon[4] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings"
-BuffIcon[5] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary"
---lesser blessings
-BuffIcon[6] = "Interface\\Icons\\Spell_Holy_SealOfWisdom";
-BuffIcon[7] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
-BuffIcon[8] = "Interface\\Icons\\Spell_Holy_SealOfSalvation";
-BuffIcon[9] = "Interface\\Icons\\Spell_Holy_PrayerOfHealing02";
-BuffIcon[10] = "Interface\\Icons\\Spell_Magic_MageArmor";
-BuffIcon[11] = "Interface\\Icons\\Spell_Nature_LightningShield";
+if (FiveMinuteBlessingOn == false) 
+  then
+    BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom";
+    BlessingIcon[1] = "Interface\\Icons\\Spell_holy_greaterblessingofkings";
+    BlessingIcon[2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation";
+    BlessingIcon[3] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofLight";
+    BlessingIcon[4] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings";
+    BlessingIcon[5] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary";
+    BuffIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom"
+    BuffIcon[1] = "Interface\\Icons\\spell_holy_greaterblessingofkings"
+    BuffIcon[2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation"
+    BuffIcon[3] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofLight"
+    BuffIcon[4] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings"
+    BuffIcon[5] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary"
+  else
+    BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_SealOfWisdom";
+    BlessingIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
+    BlessingIcon[2] = "Interface\\Icons\\Spell_Holy_SealOfSalvation";
+    BlessingIcon[3] = "Interface\\Icons\\Spell_Holy_PrayerOfHealing02";
+    BlessingIcon[4] = "Interface\\Icons\\Spell_Magic_MageArmor";
+    BlessingIcon[5] = "Interface\\Icons\\Spell_Nature_LightningShield";
+    BuffIcon[0] = "Interface\\Icons\\Spell_Holy_SealOfWisdom";
+    BuffIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
+    BuffIcon[2] = "Interface\\Icons\\Spell_Holy_SealOfSalvation";
+    BuffIcon[3] = "Interface\\Icons\\Spell_Holy_PrayerOfHealing02";
+    BuffIcon[4] = "Interface\\Icons\\Spell_Magic_MageArmor";
+    BuffIcon[5] = "Interface\\Icons\\Spell_Nature_LightningShield";
+end
+
+
+
 
 LastCast = { };
 LastCastOn = { };
 PP_Symbols = 0
 IsPally = 0;
+
+
 
 PallyPower_ClassTexture = { };
 PallyPower_ClassTexture[0] = "Interface\\AddOns\\PallyPower\\Icons\\Warrior";
@@ -58,20 +90,14 @@ PallyPower_ClassTexture[6] = "Interface\\AddOns\\PallyPower\\Icons\\Mage";
 PallyPower_ClassTexture[7] = "Interface\\AddOns\\PallyPower\\Icons\\Warlock";
 PallyPower_ClassTexture[8] = "Interface\\AddOns\\PallyPower\\Icons\\Shaman";
 
-PP_PerUser = {
-    scalemain = 1, -- corner of main window docked to
-    scalebar = 1, -- corner menu window is docked from
-    scanfreq = 10,
-    scanperframe = 1,
-    smartbuffs = 1,
-}
-PP_NextScan = PP_PerUser.scanfreq
 
 Assignment = { };
 
 CurrentBuffs = { };
 
 PP_PREFIX = "PLPWR";
+
+
 
 local function PP_Debug(string)
     if not string then
@@ -117,6 +143,13 @@ end
 function PallyPower_OnEvent(event)
     local type, id;
     if (event == "SPELLS_CHANGED" or event == "PLAYER_ENTERING_WORLD") then
+      if (FiveMinuteBlessingOn == true) then
+        FiveMinBlessing = true
+        initalized = false
+      else
+        FiveMinBlessing = false
+        initalized = false
+      end
         PallyPower_ScanSpells()
     end
 
@@ -222,6 +255,7 @@ end
 
 function PallyPowerGrid_Update()
     if not initalized then
+        DEFAULT_CHAT_FRAME:AddMessage("[PallyPower] " .. "rerunning scan")
         PallyPower_ScanSpells()
     end
     -- Pally 1 is always myself
@@ -259,11 +293,7 @@ function PallyPowerGrid_Update()
             end
             for id = 0, 8 do
                 if (PallyPower_Assignments[name]) then
-                 if( PP_Symbols < 10 ) then
-                      getglobal("PallyPowerFramePlayer" .. i .. "Class" .. id .. "Icon"):SetTexture(FiveManBlessingIcon[PallyPower_Assignments[name][id]])
-                    else
-                      getglobal("PallyPowerFramePlayer" .. i .. "Class" .. id .. "Icon"):SetTexture(BlessingIcon[PallyPower_Assignments[name][id]])
-                    end
+                  getglobal("PallyPowerFramePlayer" .. i .. "Class" .. id .. "Icon"):SetTexture(BlessingIcon[PallyPower_Assignments[name][id]])
                     --          print(" name : " .. name);
                     --          print(" id :  " .. id);
                     --          print(PallyPower_Assignments[name][id]);
@@ -293,11 +323,11 @@ function PallyPower_UpdateUI()
     -- Buff Bar
     PallyPowerBuffBar:SetScale(PP_PerUser.scalebar);
     local pclass, eclass = UnitClass("player")
-
+    
     if eclass == "PALADIN" then
       IsPally = 1
     end
-
+    
     --if ((GetNumRaidMembers() == 0 and GetNumPartyMembers() == 0) or (IsPally == 0)) then
     --    PallyPowerBuffBar:Hide()
     --else
@@ -310,11 +340,8 @@ function PallyPower_UpdateUI()
             for class = 0, 8 do
                 if (assign[class] and assign[class] ~= -1) then
                     getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "ClassIcon"):SetTexture(PallyPower_ClassTexture[class]);
-                    if( PP_Symbols < 10 ) then
-                      getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "BuffIcon"):SetTexture(FiveManBlessingIcon[assign[class]]);
-                    else
-                      getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
-                    end
+                    getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
+                    
                     local btn = getglobal("PallyPowerBuffBarBuff" .. BuffNum);
                     btn.classID = class;
                     btn.buffID = assign[class];
@@ -374,13 +401,13 @@ function PallyPower_UpdateUI()
         end
         PallyPowerBuffBar:SetHeight(30 + (34 * (BuffNum - 1)));
     end
-
+   
 end
 
 function PallyPower_ScanSpells()
     local RankInfo = {}
     local i = 1
-
+    
     while true do
         local spellName, spellRank = GetSpellName(i, BOOKTYPE_SPELL)
         local spellTexture = GetSpellTexture(i, BOOKTYPE_SPELL)
@@ -393,48 +420,51 @@ function PallyPower_ScanSpells()
         if not spellRank or spellRank == "" then
             spellRank = PallyPower_Rank1
         end
-        Age = PP_Symbols;
-        if( PP_Symbols < 10 )
-        then
-          local _, _, bless = string.find(spellName, PallyPower_FiveManBlessingSpellSearch)
-          if bless then
-
-              for id, name in PallyPower_BlessingID do
-                if name == bless then
-                    local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
-                    if (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
-                        -- Do Nothing
-                    else
-                        RankInfo[id] = {};
-                        RankInfo[id]["rank"] = rank;
-                        RankInfo[id]["id"] = i;
-                        RankInfo[id]["name"] = name;
-                        RankInfo[id]["talent"] = 0;
-                    end
-                end
-            end
-          end
-        else
-          local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
-          if bless then
-
-              for id, name in PallyPower_BlessingID do
-                if name == bless then
-                    local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
-                    if (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
-                        -- Do Nothing
-                    else
-                        RankInfo[id] = {};
-                        RankInfo[id]["rank"] = rank;
-                        RankInfo[id]["id"] = i;
-                        RankInfo[id]["name"] = name;
-                        RankInfo[id]["talent"] = 0;
-                    end
-                end
-            end
+        
+      if (FiveMinuteBlessingOn == true) 
+      
+      then
+        local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
+        if bless then
+            local tmp_str, _ = string.find(spellName, "Greater")
+            for id, name in PallyPower_BlessingID do
+              if ((name == bless) and (tmp_str ~= 1))
+                then
+                  local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
+                  if (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
+                      -- Do Nothing
+                  else
+                      RankInfo[id] = {};
+                      RankInfo[id]["rank"] = rank;
+                      RankInfo[id]["id"] = i;
+                      RankInfo[id]["name"] = name;
+                      RankInfo[id]["talent"] = 0;
+                  end
+              end
           end
         end
-        i = i + 1
+      else
+        local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
+        if bless then
+            local tmp_str, _ = string.find(spellName, "Greater")
+            for id, name in PallyPower_BlessingID do
+              if ((name == bless) and (tmp_str == 1))
+                then
+                  local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
+                  if (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
+                      -- Do Nothing
+                  else
+                      RankInfo[id] = {};
+                      RankInfo[id]["rank"] = rank;
+                      RankInfo[id]["id"] = i;
+                      RankInfo[id]["name"] = name;
+                      RankInfo[id]["talent"] = 0;
+                  end
+              end
+          end
+        end
+      end
+      i = i + 1
     end
     local numTabs = GetNumTalentTabs();
     for t = 1, numTabs do
@@ -467,6 +497,7 @@ function PallyPower_ScanSpells()
         initalized = true;
     end
     PallyPower_ScanInventory()
+    
 end
 
 function PallyPower_Refresh()
@@ -862,11 +893,13 @@ function PallyPower_ScanRaid()
             for i = 1, GetNumRaidMembers() do
                 tinsert(PP_Scanners, "raid" .. i)
             end
+            INRAID = 1
         else
             tinsert(PP_Scanners, "player");
             for i = 1, GetNumPartyMembers() do
                 tinsert(PP_Scanners, "party" .. i)
             end
+            INRAID = 0
         end
     end
     local tests = PP_PerUser.scanperframe
@@ -1056,6 +1089,7 @@ function PallyPower_ShowFeedback(msg, r, g, b, a)
         UIErrorsFrame:AddMessage(msg, r, g, b, a)
     end
 end
+
 
 function PallyPowerGridButton_OnMouseWheel(btn, arg1)
     _, _, pnum, class = string.find(btn:GetName(), "PallyPowerFramePlayer(.+)Class(.+)");

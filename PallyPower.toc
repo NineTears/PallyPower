@@ -3,5 +3,6 @@
 ## Author: Aznamir
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## SavedVariablesPerCharacter: PP_PerUser,PallyPower_Assignments
+## SavedVariablesPerCharacter: PallyPower_Assignments, FiveMinuteBlessingOn, PP_PerUser
+PallyPower.lua
 PallyPower.xml

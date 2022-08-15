@@ -2,6 +2,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="localization.lua"/>
     <Script file="PallyPower.lua"/>
+    <Script file="whichblessing.lua"/>
 
     <Button name="PallyPowerResizeTemplate" virtual="true">
         <Size>
@@ -175,7 +176,9 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
-                <Texture file="Interface\Icons\Spell_Holy_FistOfJustice" name="$parentIcon1">
+               
+               
+                  <Texture file="Interface\Icons\Spell_holy_greaterblessingofkings" name="$parentIcon1">
                     <Size>
                         <AbsDimension x="16" y="16"/>
                     </Size>
@@ -186,7 +189,11 @@
                             </Offset>
                         </Anchor>
                     </Anchors>
-                </Texture>
+                  </Texture>
+               
+               
+               
+               
                 <Texture file="Interface\Icons\Spell_Holy_SealOfSalvation" name="$parentIcon2">
                     <Size>
                         <AbsDimension x="16" y="16"/>
@@ -666,6 +673,7 @@
             </BackgroundInsets>
         </Backdrop>
         <Layers>
+
             <Layer level="ARTWORK">
                 <Texture name="$parentLine2" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
                     <Size>
@@ -910,12 +918,12 @@
                     <OnUpdate>PallyPowerGrid_Update()</OnUpdate>
                 </Scripts>
                 <Layers>
-                    <Layer level="OVERLAY">
-                        <FontString name="$parentText" inherits="GameFontNormal" text="Pally Power" justifyH="CENTER">
-                            <Size>
-                                <AbsDimension x="100" y="12"/>
-                            </Size>
-                            <Anchors>
+                  <Layer level="OVERLAY">
+                      <FontString name="$parentText" inherits="GameFontNormal" text="Pally Power" justifyH="CENTER">
+                          <Size>
+                              <AbsDimension x="100" y="12"/>
+                          </Size>
+                          <Anchors>
                                 <Anchor point="LEFT">
                                     <Offset>
                                         <AbsDimension x="5" y="0"/>
@@ -923,7 +931,8 @@
                                 </Anchor>
                             </Anchors>
                         </FontString>
-                    </Layer>
+                        
+                  </Layer>
                 </Layers>
             </Button>
             <Button name="$parentCloseButton" inherits="UIPanelCloseButton">
@@ -961,7 +970,6 @@
                     </Anchor>
                 </Anchors>
             </Button>
-
             <Button name="$parentClear" inherits="GameMenuButtonTemplate" text="PALLYPOWER_CLEAR" hidden="false">
                 <Size>
                     <AbsDimension x="100" y="20"/>
@@ -1062,6 +1070,7 @@
                     <Anchor point="TOPLEFT" relativeTo="$parentPlayer11" relativePoint="BOTTOMLEFT"/>
                 </Anchors>
             </Frame>
+
         </Frames>
         <Scripts>
             <OnLoad>
@@ -1075,8 +1084,7 @@
             <OnHide>if (this.isMoving) then this:StopMovingOrSizing(); this.isMoving = false; end</OnHide>
         </Scripts>
     </Frame>
-
-    <Frame name="PallyPower_ScalingFrame" hidden="true">
+        <Frame name="PallyPower_ScalingFrame" hidden="true">
         <Scripts>
             <OnUpdate>
                     PallyPower_ScalingFrame_OnUpdate(arg1)
@@ -1172,7 +1180,19 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-
+                <FontString name="$parentOption5" inherits="GameFontHighlight" text="PALLYPOWER_OPTIONS_FIVEMIN"
+                            justifyH="LEFT">
+                    <Size>
+                        <AbsDimension x="300" y="16"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="7" y="-125"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
             </Layer>
         </Layers>
         <Frames>
@@ -1357,6 +1377,22 @@
                 <Scripts>
                     <OnShow>if (PP_PerUser.smartbuffs) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
                     <OnClick>PP_PerUser.smartbuffs = this:GetChecked()</OnClick>
+                </Scripts>
+            </CheckButton>
+            <CheckButton name="FiveMinBlessingChk" inherits="OptionsCheckButtonTemplate">
+                <Size>
+                    <AbsDimension x="20" y="20"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-5" y="-125"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnShow>if (FiveMinuteBlessingOn) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
+                    <OnClick>FiveMinuteBlessingOn = this:GetChecked();PallyPower_FiveMinuteBlessings();</OnClick>
                 </Scripts>
             </CheckButton>
         </Frames>
