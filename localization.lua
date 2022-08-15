@@ -3,7 +3,7 @@ PallyPower_Version = "1.066"
   SLASH_PALLYPOWER2 = "/pallypower"
 
 PallyPower_BlessingID = { };
-if (FiveMinuteBlessingOn == false) 
+if (FiveMinBlessing == false) 
 
   then
     PallyPower_BlessingID[0] = "Wisdom";

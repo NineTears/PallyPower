@@ -36,11 +36,16 @@ function PallyPower_FiveMinuteBlessings()
     end
 
 end
+if FiveMinuteBlessingOn == true
+then
 
+else
+
+end
 
 --filler?
 BuffIcon[-1] = "Interface\\Icons\\Ability_Stealth"
-if (FiveMinuteBlessingOn == false) 
+if (FiveMinBlessing == false) 
   then
     BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom";
     BlessingIcon[1] = "Interface\\Icons\\Spell_holy_greaterblessingofkings";
@@ -145,11 +150,12 @@ function PallyPower_OnEvent(event)
     if (event == "SPELLS_CHANGED" or event == "PLAYER_ENTERING_WORLD") then
       if (FiveMinuteBlessingOn == true) then
         FiveMinBlessing = true
-        initalized = false
+        --initalized = false
       else
         FiveMinBlessing = false
-        initalized = false
+        --initalized = false
       end
+        PallyPower_UpdateUI()
         PallyPower_ScanSpells()
     end
 
@@ -421,7 +427,9 @@ function PallyPower_ScanSpells()
             spellRank = PallyPower_Rank1
         end
         
-      if (FiveMinuteBlessingOn == true) 
+      
+
+      if (FiveMinBlessing == true) 
       
       then
         local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
