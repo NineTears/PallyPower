@@ -28,9 +28,11 @@ function PallyPower_FiveMinuteBlessings()
     isChecked = FiveMinBlessingChk:GetChecked()
 
     if (isChecked == 1) then
+      PP_Symbols = 0
       FiveMinuteBlessingOn = true;
       ReloadUI()
     else
+      PP_Symbols = 0
       FiveMinuteBlessingOn = false;
       ReloadUI()
     end
@@ -509,10 +511,14 @@ function PallyPower_ScanSpells()
 end
 
 function PallyPower_Refresh()
-    AllPallys = {}
-    PallyPower_ScanSpells()
+    --PP_Symbols = 0
+	
+    --AllPallys = { };
+    --DEFAULT_CHAT_FRAME:AddMessage("[PallyPower] " .. "You clicked refresh", r, g, b, a)
+	--DEFAULT_CHAT_FRAME:AddMessage("[PallyPower] " .. AllPallys[UnitName("player")]["symbols"], r, g, b, a)
     PallyPower_SendSelf()
     PallyPower_RequestSend()
+	PallyPower_ScanSpells()
     PallyPower_UpdateUI()
 end
 
@@ -885,7 +891,12 @@ function PallyPower_ScanInventory()
     if PP_Symbols ~= oldcount then
         PallyPower_SendMessage("SYMCOUNT " .. PP_Symbols);
     end
-    AllPallys[UnitName("player")]["symbols"] = PP_Symbols;
+    --DEFAULT_CHAT_FRAME:AddMessage("[PallyPower old count] " .. oldcount, r, g, b, a)
+    --DEFAULT_CHAT_FRAME:AddMessage("[PallyPower] " .. PP_Symbols, r, g, b, a)
+--    if (AllPallys[UnitName("player")] ~= nil) then
+--	  DEFAULT_CHAT_FRAME:AddMessage(AllPallys[UnitName("player")], r, g, b, a)
+      AllPallys[UnitName("player")]["symbols"] = PP_Symbols;
+--	end;
 end
 
 PP_ScanInfo = nil
@@ -979,15 +990,25 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
     PP_Debug("Casting " .. btn.buffID .. " on " .. btn.classID)
     CastSpell(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL);
     local RecentCast = false
-    if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (15 * 60) - 30 then
-        RecentCast = true
-    end
+	if (FiveMinBlessing == true) then
+      if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (5 * 60) - 30 then
+          RecentCast = true
+      end
+	else
+	  if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (15 * 60) - 30 then
+          RecentCast = true
+      end
+	end
     for unit, stats in CurrentBuffs[btn.classID] do
         if SpellCanTargetUnit(unit) and not (RecentCast and string.find(table.concat(LastCastOn[btn.classID], " "), unit)) then
             PP_Debug("Trying to cast on " .. unit);
             SpellTargetUnit(unit)
             PP_NextScan = 1
-            LastCast[btn.buffID .. btn.classID] = 15 * 60;
+			if (FiveMinBlessing == true) then
+              LastCast[btn.buffID .. btn.classID] = 5 * 60;
+			else
+			  LastCast[btn.buffID .. btn.classID] = 15 * 60;
+			end
             if not RecentCast then
                 LastCastOn[btn.classID] = {}
             end
