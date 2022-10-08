@@ -138,14 +138,14 @@
     </Button>
     <Frame name="UserTemplate" hidden="false" virtual="true">
         <Size>
-            <AbsDimension x="720" y="56"/>
+            <AbsDimension x="846" y="56"/>
         </Size>
         <Layers>
             <Layer level="OVERLAY">
                 <FontString name="$parentName" inherits="GameFontHighlightSmall" text="SomePally$parent"
                             justifyH="LEFT">
                     <Size>
-                        <AbsDimension x="720" y="16"/>
+                        <AbsDimension x="846" y="16"/>
                     </Size>
                     <Anchors>
                         <Anchor point="TOP">
@@ -244,7 +244,7 @@
                 </Texture>
                 <Texture name="$parentLine" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
                     <Size>
-                        <AbsDimension x="628" y="2"/>
+                        <AbsDimension x="680" y="2"/>
                     </Size>
                     <Anchors>
                         <Anchor point="TOPLEFT">
@@ -358,6 +358,18 @@
                         <Anchor point="TOPLEFT" relativeTo="$parentLine9">
                             <Offset>
                                 <AbsDimension x="56" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$parentLine11" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+                    <Size>
+                        <AbsDimension x="2" y="56" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentLine10">
+                            <Offset>
+                                <AbsDimension x="56" y="0" />
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -500,6 +512,15 @@
                     </Anchor>
                 </Anchors>
             </Button>
+            <Button name="$parentClass9" inherits="BuffGridButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentClass8" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="2" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
         </Frames>
     </Frame>
 
@@ -631,6 +652,15 @@
                     </Anchor>
                 </Anchors>
             </Button>
+            <Button name="$parentBuff10" inherits="PallyPowerBuffButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentBuff9" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
             <Button name="$parentResizeButton" inherits="PallyPowerResizeTemplate">
                 <Anchors>
                     <Anchor point="BOTTOMRIGHT">
@@ -651,7 +681,7 @@
     <Frame name="PallyPowerFrame" hidden="true" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true"
            parent="UIParent">
         <Size>
-            <AbsDimension x="640" y="760"/>
+            <AbsDimension x="705" y="760" />
         </Size>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
@@ -783,6 +813,18 @@
                         </Anchor>
                     </Anchors>
                 </Texture>
+                <Texture name="$parentLine11" file="Interface\Tooltips\UI-Tooltip-Background" hidden="false">
+                    <Size>
+                        <AbsDimension x="2" y="56" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentLine10">
+                            <Offset>
+                                <AbsDimension x="56" y="0" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
                 <Texture name="$parentClass0" file="Interface\AddOns\PallyPower\Icons\Warrior" hidden="false">
                     <Size>
                         <AbsDimension x="32" y="32"/>
@@ -887,6 +929,18 @@
                         <Anchor point="TOPLEFT" relativeTo="$parentClass7">
                             <Offset>
                                 <AbsDimension x="56" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$parentClass9" file="Interface\AddOns\PallyPower\Icons\Pet" hidden="false">
+                    <Size>
+                        <AbsDimension x="32" y="32" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentClass8">
+                            <Offset>
+                                <AbsDimension x="56" y="0" />
                             </Offset>
                         </Anchor>
                     </Anchors>
