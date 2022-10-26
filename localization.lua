@@ -76,6 +76,7 @@ PallyPower_ClassID[5] = "Hunter";
 PallyPower_ClassID[6] = "Mage";
 PallyPower_ClassID[7] = "Warlock";
 PallyPower_ClassID[8] = "Shaman";
+PallyPower_ClassID[9] = "Pet";
 
 --XML
 PALLYPOWER_CLEAR = "Clear";
@@ -141,6 +142,7 @@ if (GetLocale() == "deDE") then
     PallyPower_ClassID[6] = "Magier";
     PallyPower_ClassID[7] = "Hexenmeister";
     PallyPower_ClassID[8] = "Schamane";
+    PallyPower_ClassID[9] = "Pet";
 
     -- XML Localization
     PALLYPOWER_CLEAR = "L\195\182schen";
@@ -200,6 +202,7 @@ elseif (GetLocale() == "frFR") then
     PallyPower_ClassID[6] = "Mage";
     PallyPower_ClassID[7] = "D\195\169moniste";
     PallyPower_ClassID[8] = "Chamane";
+    PallyPower_ClassID[9] = "Pet";
     
     --XML
     PALLYPOWER_CLEAR = "Nettoyer";

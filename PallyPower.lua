@@ -96,6 +96,7 @@ PallyPower_ClassTexture[5] = "Interface\\AddOns\\PallyPower\\Icons\\Hunter";
 PallyPower_ClassTexture[6] = "Interface\\AddOns\\PallyPower\\Icons\\Mage";
 PallyPower_ClassTexture[7] = "Interface\\AddOns\\PallyPower\\Icons\\Warlock";
 PallyPower_ClassTexture[8] = "Interface\\AddOns\\PallyPower\\Icons\\Shaman";
+PallyPower_ClassTexture[9] = "Interface\\AddOns\\PallyPower\\Icons\\Pet";
 
 
 Assignment = { };
@@ -104,7 +105,8 @@ CurrentBuffs = { };
 
 PP_PREFIX = "PLPWR";
 
-
+local RestorSelfAutoCastTimeOut = 1;
+local RestorSelfAutoCast = false;
 
 local function PP_Debug(string)
     if not string then
@@ -131,6 +133,15 @@ function PallyPower_OnLoad()
 end
 
 function PallyPower_OnUpdate(tdiff)
+    
+    if (RestorSelfAutoCast) then
+		RestorSelfAutoCastTimeOut = RestorSelfAutoCastTimeOut - tdiff;
+		if (RestorSelfAutoCastTimeOut < 0) then
+			RestorSelfAutoCast = false;
+			SetCVar("autoSelfCast", "1");
+		end
+	end
+    
     --  PP_Debug("OnUpdate "..tdiff);
     if (not PP_PerUser.scanfreq) then
         PP_PerUser.scanfreq = 10;
@@ -226,7 +237,7 @@ function PallyPower_Report()
             list[4] = 0;
             list[5] = 0;
             PP_Debug(list[0]);
-            for id = 0, 8 do
+            for id = 0, 9 do
                 local bid = PallyPower_Assignments[name][id]
                 if bid >= 0 then
                     list[bid] = list[bid] + 1
@@ -299,7 +310,7 @@ function PallyPowerGrid_Update()
                     getglobal("PallyPowerFramePlayer" .. i .. "Skill" .. id):Hide()
                 end
             end
-            for id = 0, 8 do
+            for id = 0, 9 do
                 if (PallyPower_Assignments[name]) then
                   getglobal("PallyPowerFramePlayer" .. i .. "Class" .. id .. "Icon"):SetTexture(BlessingIcon[PallyPower_Assignments[name][id]])
                     --          print(" name : " .. name);
@@ -345,7 +356,7 @@ function PallyPower_UpdateUI()
         BuffNum = 1
         if PallyPower_Assignments[UnitName("player")] then
             local assign = PallyPower_Assignments[UnitName("player")]
-            for class = 0, 8 do
+            for class = 0, 9 do
                 if (assign[class] and assign[class] ~= -1) then
                     getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "ClassIcon"):SetTexture(PallyPower_ClassTexture[class]);
                     getglobal("PallyPowerBuffBarBuff" .. BuffNum .. "BuffIcon"):SetTexture(BlessingIcon[assign[class]]);
@@ -403,7 +414,7 @@ function PallyPower_UpdateUI()
                 end
             end
         end
-        for rest = BuffNum, 9 do
+        for rest = BuffNum, 10 do
             local btn = getglobal("PallyPowerBuffBarBuff" .. rest);
             btn:Hide();
         end
@@ -562,7 +573,7 @@ function PallyPower_SendSelf()
         end
     end
     msg = msg .. "@"
-    for id = 0, 8 do
+    for id = 0, 9 do
         if (not PallyPower_Assignments[UnitName("player")]) or (not PallyPower_Assignments[UnitName("player")][id]) or PallyPower_Assignments[UnitName("player")][id] == -1 then
             msg = msg .. "n"
         else
@@ -600,7 +611,7 @@ function PallyPower_ParseMessage(sender, msg)
                 end
             end
             if assign then
-                for id = 0, 8 do
+                for id = 0, 9 do
                     tmp = string.sub(assign, id + 1, id + 1)
                     if (tmp == "n" or tmp == "") then
                         tmp = -1
@@ -632,7 +643,7 @@ function PallyPower_ParseMessage(sender, msg)
                 PallyPower_Assignments[name] = {}
             end
             skill = skill + 0
-            for class = 0, 8 do
+            for class = 0, 9 do
                 PallyPower_Assignments[name][class] = skill;
             end
             PallyPower_UpdateUI()
@@ -752,7 +763,7 @@ function PallyPower_PerformCycleBackwards(name, class)
     end
 
     if shift then
-        for test = 0, 8 do
+        for test = 0, 9 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN " .. name .. " " .. cur)
@@ -794,7 +805,7 @@ function PallyPower_PerformCycle(name, class)
     end
 
     if shift then
-        for test = 0, 8 do
+        for test = 0, 9 do
             PallyPower_Assignments[name][test] = cur
         end
         PallyPower_SendMessage("MASSIGN " .. name .. " " .. cur)
@@ -932,6 +943,38 @@ function PallyPower_ScanRaid()
         local class = UnitClass(unit)
         if (name and class) then
             local cid = PallyPower_GetClassID(class)
+            PP_Debug("unit " .. unit .. " cid " .. cid .. " class " .. class);
+
+            if cid == 5 then -- hunters
+                local petId = "raidpet" .. string.sub(unit, 5);
+                PP_Debug(petId);
+
+                local pet_name = UnitName(petId)
+                PP_Debug(petId);
+
+                if pet_name then
+                    local classID = 9
+                    if not PP_ScanInfo[classID] then
+                        PP_ScanInfo[classID] = {}
+                    end
+
+                    PP_ScanInfo[classID][petId] = {};
+                    PP_ScanInfo[classID][petId]["name"] = pet_name;
+                    PP_ScanInfo[classID][petId]["visible"] = UnitIsVisible(petId);
+
+                    local j = 1
+                    while UnitBuff(petId, j, true) do
+                        local buffIcon, _ = UnitBuff(petId, j, true)
+                        local txtID = PallyPower_GetBuffTextureID(buffIcon)
+                        if txtID > 5 then
+                            txtID = txtID - 6
+                        end
+                        PP_ScanInfo[classID][petId][txtID] = true
+                        j = j + 1
+                    end
+                end
+            end
+
             if not PP_ScanInfo[cid] then
                 PP_ScanInfo[cid] = {}
             end
@@ -986,6 +1029,13 @@ function PallyPowerBuffButton_OnLoad(btn)
 end
 
 function PallyPowerBuffButton_OnClick(btn, mousebtn)
+    
+    RestorSelfAutoCastTimeOut = 1;
+    if (GetCVar("autoSelfCast") == "1") then
+	    RestorSelfAutoCast = true;
+	    SetCVar("autoSelfCast", "0");
+    end
+    
     ClearTarget()
     PP_Debug("Casting " .. btn.buffID .. " on " .. btn.classID)
     CastSpell(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL);
