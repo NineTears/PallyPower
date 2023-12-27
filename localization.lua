@@ -1,25 +1,15 @@
-PallyPower_Version = "1.066"
+PallyPower_Version = "1.072"
   SLASH_PALLYPOWER1 = "/pp"
   SLASH_PALLYPOWER2 = "/pallypower"
 
 PallyPower_BlessingID = { };
-if (FiveMinBlessing == false) 
 
-  then
-    PallyPower_BlessingID[0] = "Wisdom";
-    PallyPower_BlessingID[1] = "Might";
-    PallyPower_BlessingID[2] = "Salvation";
-    PallyPower_BlessingID[3] = "Light";
-    PallyPower_BlessingID[4] = "Kings";
-    PallyPower_BlessingID[5] = "Sanctuary";
-  else
-    PallyPower_BlessingID[0] = "Wisdom";
-    PallyPower_BlessingID[1] = "Might";
-    PallyPower_BlessingID[2] = "Salvation";
-    PallyPower_BlessingID[3] = "Light";
-    PallyPower_BlessingID[4] = "Kings";
-    PallyPower_BlessingID[5] = "Sanctuary";
-end;
+PallyPower_BlessingID[0] = "Wisdom";
+PallyPower_BlessingID[1] = "Might";
+PallyPower_BlessingID[2] = "Salvation";
+PallyPower_BlessingID[3] = "Light";
+PallyPower_BlessingID[4] = "Kings";
+PallyPower_BlessingID[5] = "Sanctuary";
 
 PallyPower_BlessingTalentSearch = "Improved Blessing of (.*)";
 
@@ -50,12 +40,11 @@ PallyPower_BuffBarTitle = "Pally Buffs (%d)"
 
 --- By Lines... Keep People the same, feel free to add yourself in the _Credits3 line if your localizing
 --- And feel free to add a friend or two to special thanks
-PallyPower_Credits1 = "Pally Power - by Aznamir"
-PallyPower_Credits2 = "Version "..PallyPower_Version
-PallyPower_Credits3 = ""
-PallyPower_Credits4 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
-PallyPower_Credits5 = "Updated version for Turtle WoW, added Shamans, by Rake/Xerron"
-PallyPower_Credits6 = "Special Thanks: Gnarf, Blackoz, Peaches"
+PallyPower_Credits1 = "Relar Pally Power - Version: "..PallyPower_Version
+PallyPower_Credits2 = "Originaly by Sneakyfoot of Resurrection of Nathrezim"
+PallyPower_Credits3 = "Updated version for Turtle WoW, added Shamans, by Rake/Xerron"
+PallyPower_Credits4 = "Fixes and debugging by Relar"
+PallyPower_Credits5 = ""
 
 -- Buff name, Class Name
 PallyPower_CouldntFind = "Couldn't find a target for %s on %s!"

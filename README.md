@@ -1,4 +1,4 @@
-# PallyPower TW Edition
+# Relar PallyPower for TurtleWoW
 - Download the zip file and rename to PallyPower
 
 - Added an option to swap between Five minute blessings and Greater Blessings.  
@@ -8,5 +8,8 @@
 - Added Hunter Pet Support
 - Added autoSelfCast Support
 
+- Fixed icons, 5min/15min blessing icons and detection
+- Fixed Refresh and Clear
+- Added Refresh and Clear feedback
 
 https://turtle-wow.org/
