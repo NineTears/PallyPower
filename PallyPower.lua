@@ -1086,9 +1086,9 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
             SpellTargetUnit(unit)
             PP_NextScan = 1
 			if (FiveMinBlessing == true) then
-				LastCast[btn.buffID .. btn.classID] = 5 * 60;
+				LastCast[btn.buffID .. btn.classID] = 10 * 60;
 			else
-				LastCast[btn.buffID .. btn.classID] = 15 * 60;
+				LastCast[btn.buffID .. btn.classID] = 30 * 60;
 			end
             LastCastOn[btn.classID] = {}
             tinsert(LastCastOn[btn.classID], unit)
