@@ -1,4 +1,4 @@
-PallyPower_Version = "1.072"
+PallyPower_Version = "1.073"
   SLASH_PALLYPOWER1 = "/pp"
   SLASH_PALLYPOWER2 = "/pallypower"
 
@@ -11,7 +11,7 @@ PallyPower_BlessingID[3] = "Light";
 PallyPower_BlessingID[4] = "Kings";
 PallyPower_BlessingID[5] = "Sanctuary";
 
-PallyPower_BlessingTalentSearch = "Improved Blessing of (.*)";
+PallyPower_BlessingTalentSearch = "Improved Blessings";
 
 if (FiveMinBlessing == false) 
   then

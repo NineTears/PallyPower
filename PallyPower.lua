@@ -468,16 +468,36 @@ function PallyPower_ScanSpells()
         local numTalents = GetNumTalents(t);
         for i = 1, numTalents do
             nameTalent, icon, iconx, icony, currRank, maxRank = GetTalentInfo(t, i);
-            local _, _, bless = string.find(nameTalent, PallyPower_BlessingTalentSearch)
-            if bless then
-                initalized = true;
-                for id, name in PallyPower_BlessingID do
-                    if name == bless then
-                        if (RankInfo[id]) then
-                            RankInfo[id]["talent"] = currRank;
-                        end
-                    end
-                end
+            
+			--newCode
+			if nameTalent == PallyPower_BlessingTalentSearch then
+				initalized = true
+				--PallyPower_BlessingID[0] = "Wisdom";
+				--PallyPower_BlessingID[1] = "Might";
+				--PallyPower_BlessingID[2] = "Salvation";
+				--PallyPower_BlessingID[3] = "Light";
+				--PallyPower_BlessingID[4] = "Kings";
+				--PallyPower_BlessingID[5] = "Sanctuary";
+				RankInfo[0]["talent"] = currRank
+				RankInfo[1]["talent"] = currRank
+			--newCode end
+			
+			
+			--Orignal code
+			--local _, _, bless = string.find(nameTalent, PallyPower_BlessingTalentSearch)
+			--initalized = true
+            --if bless then
+            --    initalized = true;
+            --    for id, name in PallyPower_BlessingID do
+            --        if name == bless then
+            --            if (RankInfo[id]) then
+            --                RankInfo[id]["talent"] = currRank;
+            --            end
+            --        end
+            --    end
+			--Original code end
+			
+			
             end
         end
     end
@@ -1052,10 +1072,12 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
 		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (5 * 60) - 30 then
 			RecentCast = true
 		end
+	
 	else
 		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (15 * 60) - 30 then
 			RecentCast = true
 		end
+	
 	end
 	]]--
     for unit, stats in CurrentBuffs[btn.classID] do
