@@ -87,7 +87,7 @@ function PallyPower_OnLoad()
         PallyPower_SlashCommandHandler(msg)
     end
 	
-	DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080Relar|r PallyPower for TurtleWoW version "..PallyPower_Version.." |cff00FF00loaded successfully!|r")
+	--DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080Relar|r 祝福助手 - TurtleWoW version "..PallyPower_Version.." |cff00FF00加载成功!|r")
 end
 
 function PallyPower_OnUpdate(tdiff)
@@ -262,7 +262,7 @@ end
 
 function PallyPowerGrid_Update()
     if not initalized then
-        DEFAULT_CHAT_FRAME:AddMessage("[PallyPower] " .. "rerunning scan")
+        DEFAULT_CHAT_FRAME:AddMessage("[祝福助手] " .. "重新扫描")
         PallyPower_ScanSpells()
     end
     -- Pally 1 is always myself
@@ -429,9 +429,9 @@ function PallyPower_ScanSpells()
     if FiveMinBlessing == true then
         local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
 		if bless then
-            local tmp_str, _ = string.find(spellName, "Greater")
+            local tmp_str, _ = string.find(spellName, PPGreater)
             for id, name in PallyPower_BlessingID do
-				if ((name == bless) and (tmp_str ~= 1)) then
+				if ((name == bless) and (tmp_str == nil)) then
 					local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
 					if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
 						RankInfo[id] = {};
@@ -446,9 +446,9 @@ function PallyPower_ScanSpells()
     else
         local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
         if bless then
-            local tmp_str, _ = string.find(spellName, "Greater")
+            local tmp_str, _ = string.find(spellName, PPGreater)
             for id, name in PallyPower_BlessingID do
-				if ((name == bless) and (tmp_str == 1)) then
+				if ((PPGreater..name == bless) and (tmp_str == 1)) then
 					local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
 					if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
 						RankInfo[id] = {};
@@ -468,36 +468,16 @@ function PallyPower_ScanSpells()
         local numTalents = GetNumTalents(t);
         for i = 1, numTalents do
             nameTalent, icon, iconx, icony, currRank, maxRank = GetTalentInfo(t, i);
-            
-			--newCode
-			if nameTalent == PallyPower_BlessingTalentSearch then
-				initalized = true
-				--PallyPower_BlessingID[0] = "Wisdom";
-				--PallyPower_BlessingID[1] = "Might";
-				--PallyPower_BlessingID[2] = "Salvation";
-				--PallyPower_BlessingID[3] = "Light";
-				--PallyPower_BlessingID[4] = "Kings";
-				--PallyPower_BlessingID[5] = "Sanctuary";
-				RankInfo[0]["talent"] = currRank
-				RankInfo[1]["talent"] = currRank
-			--newCode end
-			
-			
-			--Orignal code
-			--local _, _, bless = string.find(nameTalent, PallyPower_BlessingTalentSearch)
-			--initalized = true
-            --if bless then
-            --    initalized = true;
-            --    for id, name in PallyPower_BlessingID do
-            --        if name == bless then
-            --            if (RankInfo[id]) then
-            --                RankInfo[id]["talent"] = currRank;
-            --            end
-            --        end
-            --    end
-			--Original code end
-			
-			
+            local _, _, bless = string.find(nameTalent, PallyPower_BlessingTalentSearch)
+            if bless then
+                initalized = true;
+                for id, name in PallyPower_BlessingID do
+                    if name == bless then
+                        if (RankInfo[id]) then
+                            RankInfo[id]["talent"] = currRank;
+                        end
+                    end
+                end
             end
         end
     end
@@ -509,7 +489,7 @@ function PallyPower_ScanSpells()
         end
         PP_IsPally = true
     else
-        PP_Debug("I'm not a paladin?? " .. class);
+        PP_Debug("我不是圣骑士？ " .. class);
         PP_IsPally = nil
         initalized = true;
     end
@@ -518,7 +498,7 @@ end
 
 function PallyPower_Refresh()
 	if ppRefreshAfterClear ~= true then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    Relar PallyPower|r -- |cffFFFF00Refreshing...|r")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    祝福助手|r -- |cffFFFF00刷新中...|r")
 	end
 
 	--ADDED THESE TO FIX THE REFRESH NOT WORKING
@@ -535,9 +515,9 @@ function PallyPower_Refresh()
     PallyPower_UpdateUI()
 	
 	if ppRefreshAfterClear ~= true then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    Relar PallyPower|r -- |cff00FF00Refresh complete!|r")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    祝福助手|r -- |cff00FF00刷新成功!|r")
 	elseif ppRefreshAfterClear == true then
-		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    Relar PallyPower|r -- |cff00FF00Clearing complete!|r")
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    祝福助手|r -- |cff00FF00清理成功!|r")
 		ppRefreshAfterClear = false
 	end
 end
@@ -553,11 +533,11 @@ function PallyPower_Clear(fromupdate, who)
     for name, skills in PallyPower_Assignments do
         if (PallyPower_CheckRaidLeader(who) or name == who) then
             if name == who then
-				DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    Relar PallyPower|r -- |cffFFFF00Clearing...|r")
+				DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    祝福助手|r -- |cffFFFF00清理中...|r")
 			else
 				if (clearTime + 5) < GetTime() then
 					clearTime = GetTime()
-					DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    Relar PallyPower|r -- |cffFFFF00Clearing as requested by leader: |r"..who)
+					DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080    祝福助手|r -- |cffFFFF00按照团长要求清理: |r"..who)
 				end
 			end
 			for class, id in PallyPower_Assignments[name] do
@@ -721,6 +701,7 @@ function PallyPowerBuffBar_MouseDown(arg1)
 end
 
 function PallyPowerBuffBar_MouseUp()
+    if not PallyPowerBuffBar.startPosX or not PallyPowerBuffBar.startPosY then return end
     if (PallyPowerBuffBar.isMoving) then
         PallyPowerBuffBar:StopMovingOrSizing();
         PallyPowerBuffBar.isMoving = false;
@@ -1069,12 +1050,12 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
     local RecentCast = false
 	--[[
 	if (FiveMinBlessing == true) then
-		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (5 * 60) - 30 then
+		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (10 * 60) - 30 then
 			RecentCast = true
 		end
 	
 	else
-		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (15 * 60) - 30 then
+		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (30 * 60) - 30 then
 			RecentCast = true
 		end
 	

@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="localization.lua"/>
     <Script file="PallyPower.lua"/>
-    <Script file="whichblessing.lua"/>
+    <!-- <Script file="whichblessing.lua"/> -->
 
     <Button name="PallyPowerResizeTemplate" virtual="true">
         <Size>
@@ -973,9 +973,9 @@
                 </Scripts>
                 <Layers>
                   <Layer level="OVERLAY">
-                      <FontString name="$parentText" inherits="GameFontNormal" text="Pally Power" justifyH="CENTER">
+                      <FontString name="$parentText" inherits="GameFontNormal" text="祝福助手" justifyH="CENTER">
                           <Size>
-                              <AbsDimension x="100" y="12"/>
+                              <AbsDimension x="" y="12"/>
                           </Size>
                           <Anchors>
                                 <Anchor point="LEFT">

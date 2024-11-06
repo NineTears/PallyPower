@@ -13,3 +13,5 @@
 - Added Refresh and Clear feedback
 
 https://turtle-wow.org/
+
+中文版由wind汉化，由问题请反馈10939683@qq.com。

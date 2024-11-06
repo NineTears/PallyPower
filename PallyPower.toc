@@ -1,8 +1,9 @@
-## Interface: 11200
-## Title: |cFFFF8080Relar|r PallyPower |cff7fff7f1.074|r |cffabd473Turtle-WoW|r
-## Author: Relar
+﻿## Interface: 11200
+## Title: |CFF33AAFFPallyPower |R祝福助手 |cffff1450[1.20]|R
+## Author: Relar Fix, |cff33ffccWind|R汉化
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: PallyPower_Assignments, FiveMinuteBlessingOn, PP_PerUser
 PallyPower.lua
 PallyPower.xml
+Bindings.xml
