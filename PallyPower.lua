@@ -1,6 +1,6 @@
 ﻿local initalized = false
 local clearTime = 0
-FiveMinuteBlessingOn = false;
+TenMinuteBlessingOn = false;
 ppRefreshAfterClear = false
 
 BINDING_HEADER_PALLYPOWER_HEADER = "Pally Power";
@@ -24,16 +24,16 @@ PP_PerUser = {
 }
 PP_NextScan = PP_PerUser.scanfreq
 
-function PallyPower_FiveMinuteBlessings()
-    isChecked = FiveMinBlessingChk:GetChecked()
+function PallyPower_TenMinuteBlessings()
+    isChecked = TenMinBlessingChk:GetChecked()
 
     if (isChecked == 1) then
       PP_Symbols = 0
-      FiveMinuteBlessingOn = true;
+      TenMinuteBlessingOn = true;
       ReloadUI()
     else
       PP_Symbols = 0
-      FiveMinuteBlessingOn = false;
+      TenMinuteBlessingOn = false;
       ReloadUI()
     end
 end
@@ -118,13 +118,13 @@ end
 function PallyPower_OnEvent(event)
     local type, id;
     if (event == "SPELLS_CHANGED" or event == "PLAYER_ENTERING_WORLD") then
-		if (FiveMinuteBlessingOn == true) then
-			FiveMinBlessing = true
-			PallyPower_SwapIconsForFiveMin()
+		if (TenMinuteBlessingOn == true) then
+			TenMinBlessing = true
+			PallyPower_SwapIconsForTenMin()
 			
 		else
-			FiveMinBlessing = false
-			PallyPower_SwapIconsForFifteenMin()
+			TenMinBlessing = false
+			PallyPower_SwapIconsForThirtyMin()
 		end
         PallyPower_UpdateUI()
         PallyPower_ScanSpells()
@@ -155,7 +155,7 @@ function PallyPower_OnEvent(event)
     end
 end
 
-function PallyPower_SwapIconsForFiveMin()
+function PallyPower_SwapIconsForTenMin()
 	BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_SealOfWisdom";
     BlessingIcon[1] = "Interface\\Icons\\Spell_Holy_FistOfJustice";
     BlessingIcon[2] = "Interface\\Icons\\Spell_Holy_SealOfSalvation";
@@ -170,7 +170,7 @@ function PallyPower_SwapIconsForFiveMin()
     BuffIcon[5] = "Interface\\Icons\\Spell_Nature_LightningShield";
 end
 
-function PallyPower_SwapIconsForFifteenMin()
+function PallyPower_SwapIconsForThirtyMin()
 	BlessingIcon[0] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom";
 	BlessingIcon[1] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofKings";
 	BlessingIcon[2] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation";
@@ -431,7 +431,7 @@ function PallyPower_ScanSpells()
             spellRank = PallyPower_Rank1
         end
         
-        if FiveMinBlessing == true then
+        if TenMinBlessing == true then
             local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
             if bless then
                 local tmp_str, _ = string.find(spellName, PPGreater)
@@ -1055,7 +1055,7 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
     CastSpell(AllPallys[UnitName("player")][btn.buffID]["id"], BOOKTYPE_SPELL);
     local RecentCast = false
 	--[[
-	if (FiveMinBlessing == true) then
+	if (TenMinBlessing == true) then
 		if LastCast[btn.buffID .. btn.classID] and LastCast[btn.buffID .. btn.classID] > (10 * 60) - 30 then
 			RecentCast = true
 		end
@@ -1072,7 +1072,7 @@ function PallyPowerBuffButton_OnClick(btn, mousebtn)
             PP_Debug("Trying to cast on " .. unit);
             SpellTargetUnit(unit)
             PP_NextScan = 1
-			if (FiveMinBlessing == true) then
+			if (TenMinBlessing == true) then
 				LastCast[btn.buffID .. btn.classID] = 10 * 60;
 			else
 				LastCast[btn.buffID .. btn.classID] = 30 * 60;

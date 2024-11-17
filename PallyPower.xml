@@ -1234,7 +1234,7 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-                <FontString name="$parentOption5" inherits="GameFontHighlight" text="PALLYPOWER_OPTIONS_FIVEMIN"
+                <FontString name="$parentOption5" inherits="GameFontHighlight" text="PALLYPOWER_OPTIONS_TENEMIN"
                             justifyH="LEFT">
                     <Size>
                         <AbsDimension x="300" y="16"/>
@@ -1433,7 +1433,7 @@
                     <OnClick>PP_PerUser.smartbuffs = this:GetChecked()</OnClick>
                 </Scripts>
             </CheckButton>
-            <CheckButton name="FiveMinBlessingChk" inherits="OptionsCheckButtonTemplate">
+            <CheckButton name="TenMinBlessingChk" inherits="OptionsCheckButtonTemplate">
                 <Size>
                     <AbsDimension x="20" y="20"/>
                 </Size>
@@ -1445,8 +1445,8 @@
                     </Anchor>
                 </Anchors>
                 <Scripts>
-                    <OnShow>if (FiveMinuteBlessingOn) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
-                    <OnClick>FiveMinuteBlessingOn = this:GetChecked();PallyPower_FiveMinuteBlessings();</OnClick>
+                    <OnShow>if (TenMinuteBlessingOn) then this:SetChecked(true) else this:SetChecked(false) end</OnShow>
+                    <OnClick>TenMinuteBlessingOn = this:GetChecked();PallyPower_TenMinuteBlessings();</OnClick>
                 </Scripts>
             </CheckButton>
         </Frames>

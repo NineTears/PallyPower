@@ -1,7 +1,7 @@
 # Relar PallyPower for TurtleWoW
 - Download the zip file and rename to PallyPower
 
-- Added an option to swap between Five minute blessings and Greater Blessings.  
+- Added an option to swap between Ten minute blessings and Greater Blessings.  
 - Added a "hack" to make it show up while questing solo
 - Updated Pally Power with Shaman class in the buff table
 

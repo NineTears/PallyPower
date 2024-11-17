@@ -13,7 +13,7 @@ PallyPower_BlessingID[5] = "Sanctuary";
 
 PallyPower_BlessingTalentSearch = "Improved Blessing of (.*)";
 
-if (FiveMinBlessing == false) 
+if (TenMinBlessing == false) 
   then
     PallyPower_BlessingSpellSearch = "Greater Blessing of (.*)";
   else
@@ -78,7 +78,7 @@ PALLYPOWER_OPTIONS_SCAN = "剩余时间扫描频率(秒)：";
 PALLYPOWER_OPTIONS_SCAN2 = "祝福每帧查询次数：";
 PALLYPOWER_OPTIONS_FEEDBACK_CHAT = "在聊天框显示反馈";
 PALLYPOWER_OPTIONS_SMARTBUFFS = "智能跳过Buff";
-PALLYPOWER_OPTIONS_FIVEMIN = "仅启用10分钟祝福 - 不使用强效祝福";
+PALLYPOWER_OPTIONS_TENEMIN = "仅启用10分钟祝福 - 不使用强效祝福";
 if (GetLocale() == "deDE") then
 	-- by Nextorus @ EU-Alexstrasza (nexter@walsweer.de)
     PallyPower_BlessingID[0] = "Weisheit";
@@ -211,7 +211,7 @@ elseif (GetLocale() == "zhCN") then
 
     PallyPower_BlessingTalentSearch = "强化(.*)";
 
-    if (FiveMinBlessing == false) 
+    if (TenMinBlessing == false) 
       then
         PallyPower_BlessingSpellSearch = "强效(.*)";
       else
