@@ -426,7 +426,7 @@ function PallyPower_ScanSpells()
 			spellRank = PallyPower_Rank1
         end
         
-    if FiveMinBlessing == true then
+    if TenMinBlessing == true then
         local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
 		if bless then
             local tmp_str, _ = string.find(spellName, PPGreater)
