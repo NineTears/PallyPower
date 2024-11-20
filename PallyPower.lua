@@ -416,58 +416,52 @@ end
 function PallyPower_ScanSpells()
     local RankInfo = {}
     local i = 1
-    local maxSpells = MAX_SPELLS or 1024
     
-    while i <= maxSpells do
+    while true do
         local spellName, spellRank = GetSpellName(i, BOOKTYPE_SPELL)
-        if not spellName then 
-            break -- 没有法术名称,跳出循环
-        end
-        
         local spellTexture = GetSpellTexture(i, BOOKTYPE_SPELL)
+        if not spellName then do break end end
         PallyPower_ScanInventory()
-        
         if not spellRank or spellRank == "" then
-            spellRank = PallyPower_Rank1
+			spellRank = PallyPower_Rank1
         end
         
-        if TenMinBlessing == true then
-            local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
-            if bless then
-                local tmp_str, _ = string.find(spellName, PPGreater)
-                for id, name in PallyPower_BlessingID do
-                    if ((name == bless) and (tmp_str == nil)) then
-                        local _, _, rank = string.find(spellRank, PallyPower_RankSearch)
-                        if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
-                            RankInfo[id] = {
-                                rank = rank or 1,
-                                id = i,
-                                name = name,
-                                talent = 0
-                            }
-                        end
-                    end
-                end
-            end
-        else
-            local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
-            if bless then
-                local tmp_str, _ = string.find(spellName, PPGreater)
-                for id, name in PallyPower_BlessingID do
-                    if ((PPGreater..name == bless) and (tmp_str == 1)) then
-                        local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
-                        if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
-                            RankInfo[id] = {};
-                            RankInfo[id]["rank"] = rank;
-                            RankInfo[id]["id"] = i;
-                            RankInfo[id]["name"] = name;
-                            RankInfo[id]["talent"] = 0;
-                        end
-                    end
-                end
-            end
+    if FiveMinBlessing == true then
+        local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
+		if bless then
+            local tmp_str, _ = string.find(spellName, PPGreater)
+            for id, name in PallyPower_BlessingID do
+				if ((name == bless) and (tmp_str == nil)) then
+					local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
+					if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
+						RankInfo[id] = {};
+						RankInfo[id]["rank"] = rank;
+						RankInfo[id]["id"] = i;
+						RankInfo[id]["name"] = name;
+						RankInfo[id]["talent"] = 0;
+					end
+				end
+			end
+		end
+    else
+        local _, _, bless = string.find(spellName, PallyPower_BlessingSpellSearch)
+        if bless then
+            local tmp_str, _ = string.find(spellName, PPGreater)
+            for id, name in PallyPower_BlessingID do
+				if ((PPGreater..name == bless) and (tmp_str == 1)) then
+					local _, _, rank = string.find(spellRank, PallyPower_RankSearch);
+					if not (RankInfo[id] and spellRank < RankInfo[id]["rank"]) then
+						RankInfo[id] = {};
+						RankInfo[id]["rank"] = rank;
+						RankInfo[id]["id"] = i;
+						RankInfo[id]["name"] = name;
+						RankInfo[id]["talent"] = 0;
+					end
+				end
+			end
         end
-        i = i + 1
+    end
+    i = i + 1
     end
     local numTabs = GetNumTalentTabs();
     for t = 1, numTabs do
