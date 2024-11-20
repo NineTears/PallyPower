@@ -530,7 +530,12 @@
             <AbsDimension x="110" y="302"/>
         </Size>
         <Anchors>
-            <Anchor point="LEFT"/>
+        <!-- 默认工具条上移，防止遮挡pfquest任务栏 -->
+            <Anchor point="LEFT">
+                <Offset>
+                    <AbsDimension x="0" y="100"/>
+                </Offset>
+            </Anchor>
         </Anchors>
         <Frames>
             <Button name="$parentTitle">
